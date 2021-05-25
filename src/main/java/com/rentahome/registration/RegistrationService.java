@@ -1,6 +1,7 @@
 package com.rentahome.registration;
 
 import com.rentahome.user.User;
+import com.rentahome.user.UserDto;
 import com.rentahome.user.UserRole;
 import com.rentahome.user.UserService;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -35,5 +37,14 @@ public class RegistrationService {
                         true
                 )
         );
+    }
+
+    public String login(LoginRequest request) {
+        Optional<UserDto> optionalUserDto = userService.loginUser(request.getEmail(), request.getPassword());
+        if (optionalUserDto.isEmpty()) {
+            return "wrong credentials";
+        } else {
+            return "success";
+        }
     }
 }

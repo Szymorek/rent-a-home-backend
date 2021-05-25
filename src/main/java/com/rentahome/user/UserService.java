@@ -19,6 +19,7 @@ public class UserService implements UserDetailsService {
     private final String USER_NOT_FOUND_MSG =
             "user with email %s not found";
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -84,12 +85,30 @@ public class UserService implements UserDetailsService {
             throw new IllegalStateException("email already taken");
         }
 
-        String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
 
         return "user registered";
+    }
+
+    public Optional<UserDto> loginUser(String email, String password) {
+
+        Optional<User> optionalUser = userRepository.findUserByEmail(email);
+
+        if (optionalUser.isEmpty()) {
+            throw new IllegalStateException("wrong credentials!!!");
+        }
+
+        boolean correctCredentials = bCryptPasswordEncoder.matches(password, optionalUser.get().getPassword());
+
+        if (!correctCredentials) {
+            throw new IllegalStateException("wrong credentials!");
+        }
+
+        return optionalUser
+                .map(this::convertToUserDto);
     }
 
     public UserDto convertToUserDto(User user) {
