@@ -1,5 +1,6 @@
 package com.rentahome.user;
 
+import com.rentahome.registration.RegistrationResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,7 +78,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
     }
 
-    public String signUpUser(User user) {
+    public RegistrationResponse signUpUser(User user) {
         boolean userExists = userRepository.findUserByEmail(user.getEmail())
                 .isPresent();
 
@@ -90,7 +91,7 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
 
-        return "user registered";
+        return new RegistrationResponse("User " + user.getUsername() + " registered successfully", true);
     }
 
     public Optional<UserDto> loginUser(String email, String password) {

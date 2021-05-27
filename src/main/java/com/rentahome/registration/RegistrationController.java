@@ -12,12 +12,12 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @PostMapping
-    public String register(@RequestBody RegistrationRequest request) {
+    public RegistrationResponse register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
     }
 
     @GetMapping
-    public String login(@RequestBody LoginRequest request) {
+    public RegistrationResponse login(@RequestBody LoginRequest request) {
         return registrationService.login(request);
     }
 }

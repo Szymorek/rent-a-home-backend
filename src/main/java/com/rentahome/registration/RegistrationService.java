@@ -18,7 +18,7 @@ public class RegistrationService {
     private final UserService userService;
     private final EmailValidator emailValidator;
 
-    public String register(RegistrationRequest request) {
+    public RegistrationResponse register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.test(request.getEmail());
         if (!isValidEmail) {
             throw new IllegalStateException("email not valid");
@@ -39,12 +39,12 @@ public class RegistrationService {
         );
     }
 
-    public String login(LoginRequest request) {
+    public RegistrationResponse login(LoginRequest request) {
         Optional<UserDto> optionalUserDto = userService.loginUser(request.getEmail(), request.getPassword());
         if (optionalUserDto.isEmpty()) {
-            return "wrong credentials";
+            return new RegistrationResponse("Wrong credentials", false);
         } else {
-            return "success";
+            return new RegistrationResponse("Authentication successful", true);
         }
     }
 }
