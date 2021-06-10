@@ -1,4 +1,4 @@
-package com.rentahome.registration;
+package com.rentahome.login;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class LoginRequest {
-    private final String email;
-    private final String password;
+public class LoginResponse {
+    private final String message;
+    private final boolean success;
 }

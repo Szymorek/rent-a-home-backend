@@ -45,4 +45,13 @@ public class Offer {
         this.price = price;
         this.dateOfCreate = dateOfCreate;
     }
+    public Offer(User user, String title, String description, Double latitude, Double longitude, Double price) {
+        this.user = user;
+        this.title = title;
+        this.description = description;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.price = price;
+        this.dateOfCreate = LocalDate.now();
+    }
 }

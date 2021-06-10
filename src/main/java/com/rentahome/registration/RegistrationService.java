@@ -1,5 +1,6 @@
 package com.rentahome.registration;
 
+import com.rentahome.login.LoginRequest;
 import com.rentahome.user.User;
 import com.rentahome.user.UserDto;
 import com.rentahome.user.UserRole;
@@ -40,7 +41,7 @@ public class RegistrationService {
     }
 
     public RegistrationResponse login(LoginRequest request) {
-        Optional<UserDto> optionalUserDto = userService.loginUser(request.getEmail(), request.getPassword());
+        Optional<UserDto> optionalUserDto = userService.loginUser(request.getEmail());
         if (optionalUserDto.isEmpty()) {
             return new RegistrationResponse("Wrong credentials", false);
         } else {

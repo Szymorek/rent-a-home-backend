@@ -46,4 +46,11 @@ public class Reservation {
         this.dateOfCreate = dateOfCreate;
         this.dateOfReservation = dateOfReservation;
     }
+
+    public Reservation(Offer offer, User user, LocalDate dateOfReservation) {
+        this.offer = offer;
+        this.user = user;
+        this.dateOfReservation = dateOfReservation;
+        this.dateOfCreate = LocalDate.now();
+    }
 }

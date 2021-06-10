@@ -94,18 +94,12 @@ public class UserService implements UserDetailsService {
         return new RegistrationResponse("User " + user.getUsername() + " registered successfully", true);
     }
 
-    public Optional<UserDto> loginUser(String email, String password) {
+    public Optional<UserDto> loginUser(String email) {
 
         Optional<User> optionalUser = userRepository.findUserByEmail(email);
 
         if (optionalUser.isEmpty()) {
             throw new IllegalStateException("wrong credentials!!!");
-        }
-
-        boolean correctCredentials = bCryptPasswordEncoder.matches(password, optionalUser.get().getPassword());
-
-        if (!correctCredentials) {
-            throw new IllegalStateException("wrong credentials!");
         }
 
         return optionalUser

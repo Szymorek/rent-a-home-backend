@@ -1,7 +1,7 @@
 package com.rentahome.registration;
 
+import com.rentahome.login.LoginRequest;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
