@@ -1,8 +1,10 @@
 package com.rentahome.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -18,6 +20,11 @@ public class UserController {
     @GetMapping
     public List<UserDto> getUsers() {
         return userService.getUsersDto();
+    }
+
+    @GetMapping(path = "login")
+    public UserDto getLoginUser(@AuthenticationPrincipal User user) {
+        return userService.getUserByEmailDto(user.getEmail());
     }
 
     @PostMapping

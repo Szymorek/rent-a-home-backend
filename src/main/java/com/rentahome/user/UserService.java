@@ -33,6 +33,17 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new IllegalStateException(
+                        "user with email " + email + "does not exist"
+                ));
+    }
+
+    public UserDto getUserByEmailDto(String email) {
+        return convertToUserDto(getUserByEmail(email));
+    }
+
     public void addNewUser(User user) {
         Optional<User> userOptional = userRepository
                 .findUserByEmail(user.getEmail());

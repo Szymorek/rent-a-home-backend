@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class UserDto {
+    private String username;
     private String name;
     private String surname;
     private String email;
@@ -16,6 +17,7 @@ public class UserDto {
     private LocalDate dateOfJoin;
 
     public UserDto(User user) {
+        this.username = user.getUsername();
         this.name = user.getName();
         this.surname = user.getSurname();
         this.email = user.getEmail();
