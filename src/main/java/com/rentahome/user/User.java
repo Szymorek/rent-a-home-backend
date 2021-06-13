@@ -1,5 +1,6 @@
 package com.rentahome.user;
 
+import com.rentahome.image.Image;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -43,6 +44,8 @@ public class User implements UserDetails {
     private UserRole userRole;
     private Boolean locked = false;
     private Boolean enabled = false;
+    @OneToOne
+    private Image image;
 
     public User(String name, String email, LocalDate dateOfBirth, LocalDate dateOfCreate) {
         this.name = name;

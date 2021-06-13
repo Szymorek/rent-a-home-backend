@@ -105,18 +105,6 @@ public class UserService implements UserDetailsService {
         return new RegistrationResponse("User " + user.getUsername() + " registered successfully", true);
     }
 
-    public Optional<UserDto> loginUser(String email) {
-
-        Optional<User> optionalUser = userRepository.findUserByEmail(email);
-
-        if (optionalUser.isEmpty()) {
-            throw new IllegalStateException("wrong credentials!!!");
-        }
-
-        return optionalUser
-                .map(this::convertToUserDto);
-    }
-
     public UserDto convertToUserDto(User user) {
         return new UserDto(user);
     }
