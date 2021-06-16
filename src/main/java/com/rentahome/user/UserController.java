@@ -42,8 +42,10 @@ public class UserController {
     public UserDto updateUser(
             @AuthenticationPrincipal User user,
             @RequestParam(required = false) String username,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String surname,
             @RequestParam(required = false) String description
     ) {
-        return userService.updateUser(user.getId(), username, description);
+        return userService.updateUser(user, username, name, surname, description);
     }
 }

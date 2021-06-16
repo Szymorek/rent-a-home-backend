@@ -21,35 +21,21 @@ public class ReservationDto {
     private OfferDto offerDto;
     @NotNull
     private UserDto userDto;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private LocalDate dateOfCreate;
+    private String startDate;
+    private String endDate;
 
     public ReservationDto(Reservation reservation) {
         this.id = reservation.getId();
         this.offerDto = new OfferDto(reservation.getOffer());
         this.userDto = new UserDto(reservation.getUser());
-        this.startDate = reservation.getStartDate();
-        this.endDate = reservation.getEndDate();
-        this.dateOfCreate = reservation.getDateOfCreate();
+        this.startDate = reservation.getStartDate().toString();
+        this.endDate = reservation.getEndDate().toString();
     }
 
     public ReservationDto(OfferDto offerDto, UserDto userDto, LocalDate startDate, LocalDate endDate) {
         this.offerDto = offerDto;
         this.userDto = userDto;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.dateOfCreate = LocalDate.now();
-    }
-
-
-    public ReservationDto(OfferDto offerDto, UserDto userDto, String startDate, String endDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
-        //LocalDate localDate = LocalDate.parse(date, formatter);
-        this.offerDto = offerDto;
-        this.userDto = userDto;
-        this.startDate = LocalDate.parse(startDate, formatter);
-        this.endDate = LocalDate.parse(endDate, formatter);
-        this.dateOfCreate = LocalDate.now();
+        this.startDate = startDate.toString();
+        this.endDate = endDate.toString();
     }
 }

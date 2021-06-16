@@ -46,7 +46,7 @@ public class User implements UserDetails {
     private Boolean enabled = true;
     @OneToOne
     private Image image;
-    private String description = "";
+    private String description;
 
     public User(String name, String email, LocalDate dateOfBirth, LocalDate dateOfCreate) {
         this.name = name;

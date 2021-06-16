@@ -22,7 +22,6 @@ public class OfferDto {
     private Double latitude;
     private Double longitude;
     private Double price;
-    private LocalDate dateOfCreate;
 
     public OfferDto(Offer offer) {
         this.id = offer.getId();
@@ -32,6 +31,5 @@ public class OfferDto {
         this.latitude = offer.getLatitude();
         this.longitude = offer.getLongitude();
         this.price = offer.getPrice();
-        this.dateOfCreate = offer.getDateOfCreate();
     }
 }

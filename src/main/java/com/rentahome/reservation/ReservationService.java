@@ -22,8 +22,8 @@ public class ReservationService {
     private final OfferRepository offerRepository;
 
 
-    public Optional<Reservation> getReservations(User user) {
-        return reservationRepository.findReservationByUser(user);
+    public List<Reservation> getReservations(User user) {
+        return reservationRepository.findAllByUser(user);
     }
 
     public List<ReservationDto> getReservationsDto(User user) {
@@ -34,21 +34,22 @@ public class ReservationService {
     }
 
     @Transactional
-    public void addNewReservation(ReservationDto reservationDto, User user) {
+    public ReservationDto addNewReservation(ReservationDto reservationDto, User user) {
         Optional<Offer> optionalOffer = offerRepository.findById(reservationDto.getOfferDto().getId());
         Reservation reservation = new Reservation(optionalOffer.get(), user, reservationDto.getStartDate(), reservationDto.getEndDate());
-        Optional<Reservation> reservationOptional = reservationRepository
-                .findReservationByOfferAndStartDateBetween(reservation.getOffer(), reservation.getStartDate(), reservation.getEndDate());
-        if (reservationOptional.isPresent()) {
-            throw new IllegalStateException("offer is already reserved for this period of time");
-        }
-        reservationOptional = reservationRepository
-                .findReservationByOfferAndEndDateBetween(reservation.getOffer(), reservation.getStartDate(), reservation.getEndDate());
-        if (reservationOptional.isPresent()) {
-            throw new IllegalStateException("offer is already reserved for this period of time");
-        }
+//        Optional<Reservation> reservationOptional = reservationRepository
+//                .findReservationByOfferAndStartDateBetween(reservation.getOffer(), reservation.getStartDate(), reservation.getEndDate());
+//        if (reservationOptional.isPresent()) {
+//            throw new IllegalStateException("offer is already reserved for this period of time");
+//        }
+//        reservationOptional = reservationRepository
+//                .findReservationByOfferAndEndDateBetween(reservation.getOffer(), reservation.getStartDate(), reservation.getEndDate());
+//        if (reservationOptional.isPresent()) {
+//            throw new IllegalStateException("offer is already reserved for this period of time");
+//        }
 
         reservationRepository.save(reservation);
+        return convertToReservationDto(reservation);
     }
 
     public ReservationDto convertToReservationDto(Reservation reservation) {
@@ -58,19 +59,19 @@ public class ReservationService {
 //    public Reservation convertToReservation(ReservationDto reservationDto) {
 //        return new Reservation(reservationDto);
 //    }
-
-    public void makeReservation(Long offerId, LocalDate startDate, LocalDate endDate, String userEmail) {
-        User user = userRepository.findUserByEmail(userEmail)
-                .orElseThrow(() -> new IllegalStateException(
-                        "user with email " + userEmail + " does not exist"
-                ));
-        Offer offer = offerRepository.findById(offerId)
-                .orElseThrow(() -> new IllegalStateException(
-                        "offer with id " + offerId + " does not exist"
-                ));
-        Reservation reservation = new Reservation(offer, user, startDate, endDate);
-        reservationRepository.save(reservation);
-    }
+//
+//    public void makeReservation(Long offerId, LocalDate startDate, LocalDate endDate, String userEmail) {
+//        User user = userRepository.findUserByEmail(userEmail)
+//                .orElseThrow(() -> new IllegalStateException(
+//                        "user with email " + userEmail + " does not exist"
+//                ));
+//        Offer offer = offerRepository.findById(offerId)
+//                .orElseThrow(() -> new IllegalStateException(
+//                        "offer with id " + offerId + " does not exist"
+//                ));
+//        Reservation reservation = new Reservation(offer, user, startDate, endDate);
+//        reservationRepository.save(reservation);
+//    }
 
     public void acceptReservation(Reservation reservation, User user) {
         offerRepository.findOfferByUserAndId(user, reservation.getOffer().getId())

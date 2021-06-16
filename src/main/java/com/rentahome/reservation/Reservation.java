@@ -39,25 +39,15 @@ public class Reservation {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private LocalDate dateOfCreate;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String startDate;
+    private String endDate;
     private Boolean accepted = false;
 
-    public Reservation(Offer offer, User user, LocalDate dateOfCreate, LocalDate startDate, LocalDate endDate) {
-        this.offer = offer;
-        this.user = user;
-        this.dateOfCreate = dateOfCreate;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
-    public Reservation(Offer offer, User user, LocalDate startDate, LocalDate endDate) {
+    public Reservation(Offer offer, User user, String startDate, String endDate) {
         this.offer = offer;
         this.user = user;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.dateOfCreate = LocalDate.now();
     }
 
 }

@@ -26,8 +26,8 @@ public class ReservationController {
     }
 
     @PostMapping
-    public void registerNewReservation(@RequestBody ReservationDto reservationDto, @AuthenticationPrincipal User user) {
-        reservationService.addNewReservation(reservationDto, user);
+    public ReservationDto registerNewReservation(@RequestBody ReservationDto reservationDto, @AuthenticationPrincipal User user) {
+        return reservationService.addNewReservation(reservationDto, user);
     }
 
     @PutMapping
