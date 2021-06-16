@@ -15,10 +15,14 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Query("SELECT o FROM Offer o WHERE o.user = ?1")
     Optional<Offer> findOfferByUser(User user);
 
+    Integer countOfferByUser(User user);
+
     @Query(
             "SELECT o FROM Offer o WHERE " +
             "(o.latitude < ?1 + ?3 AND o.latitude > ?1 - ?3) AND" +
             "(o.longitude < ?2 + ?3 AND o.longitude > ?2 - ?3)"
     )
     List<Offer> findOfferByLocation(Double latitude, Double longitude, Double range);
+
+    Optional<Offer> findOfferByUserAndId(User user, Long offerId);
 }

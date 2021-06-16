@@ -1,5 +1,7 @@
 package com.rentahome.offer;
 
+import com.rentahome.user.User;
+import com.rentahome.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +34,17 @@ public class OfferService {
     }
 
 
-    public void addNewOffer(Offer offer) {
-        Optional<Offer> offerOptional = offerRepository
-                .findOfferByUser(offer.getUser());
-        if (offerOptional.isPresent()) {
+    public OfferDto addNewOffer(OfferDto offerDto, User user) {
+        Integer offerOptional = offerRepository
+                .countOfferByUser(user);
+        if (offerOptional > 50) {
             throw new IllegalStateException("offer for this user already exists");
         }
+        Offer offer = new Offer(offerDto, user);
+
         offerRepository.save(offer);
+
+        return offerDto;
     }
 
     @Transactional

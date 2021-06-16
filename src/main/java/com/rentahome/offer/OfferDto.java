@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OfferDto {
+    private Long id;
     private UserDto userDto;
     private String title;
     private String description;
@@ -24,6 +25,7 @@ public class OfferDto {
     private LocalDate dateOfCreate;
 
     public OfferDto(Offer offer) {
+        this.id = offer.getId();
         this.userDto = new UserDto(offer.getUser());
         this.title = offer.getTitle();
         this.description = offer.getDescription();

@@ -41,11 +41,12 @@ public class User implements UserDetails {
     private LocalDate dateOfBirth;
     private LocalDate dateOfCreate = LocalDate.now();
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private UserRole userRole = UserRole.ROLE_USER;
     private Boolean locked = false;
-    private Boolean enabled = false;
+    private Boolean enabled = true;
     @OneToOne
     private Image image;
+    private String description = "";
 
     public User(String name, String email, LocalDate dateOfBirth, LocalDate dateOfCreate) {
         this.name = name;

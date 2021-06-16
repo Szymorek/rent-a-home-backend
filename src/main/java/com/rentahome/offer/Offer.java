@@ -55,4 +55,14 @@ public class Offer {
         this.price = price;
         this.dateOfCreate = LocalDate.now();
     }
+
+    public Offer(OfferDto offerDto, User user) {
+        this.user = user;
+        this.title = offerDto.getTitle();
+        this.description = offerDto.getDescription();
+        this.latitude = offerDto.getLatitude();
+        this.longitude = offerDto.getLongitude();
+        this.price = offerDto.getPrice();
+        this.dateOfCreate = LocalDate.now();
+    }
 }

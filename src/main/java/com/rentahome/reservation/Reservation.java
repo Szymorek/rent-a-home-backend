@@ -1,6 +1,6 @@
 package com.rentahome.reservation;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.rentahome.offer.Offer;
 import com.rentahome.user.User;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -38,19 +40,24 @@ public class Reservation {
     private User user;
 
     private LocalDate dateOfCreate;
-    private LocalDate dateOfReservation;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private Boolean accepted = false;
 
-    public Reservation(Offer offer, User user, LocalDate dateOfCreate, LocalDate dateOfReservation) {
+    public Reservation(Offer offer, User user, LocalDate dateOfCreate, LocalDate startDate, LocalDate endDate) {
         this.offer = offer;
         this.user = user;
         this.dateOfCreate = dateOfCreate;
-        this.dateOfReservation = dateOfReservation;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public Reservation(Offer offer, User user, LocalDate dateOfReservation) {
+    public Reservation(Offer offer, User user, LocalDate startDate, LocalDate endDate) {
         this.offer = offer;
         this.user = user;
-        this.dateOfReservation = dateOfReservation;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.dateOfCreate = LocalDate.now();
     }
+
 }

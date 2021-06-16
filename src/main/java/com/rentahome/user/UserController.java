@@ -38,12 +38,12 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
-    @PutMapping(path = "{userId}")
-    public void updateUser(
-            @PathVariable("userId") Long userId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String email
+    @PutMapping()
+    public UserDto updateUser(
+            @AuthenticationPrincipal User user,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String description
     ) {
-        userService.updateUser(userId, name, email);
+        return userService.updateUser(user.getId(), username, description);
     }
 }

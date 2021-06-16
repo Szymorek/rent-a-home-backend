@@ -64,23 +64,25 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void updateUser(Long userId, String name, String email) {
+    public UserDto updateUser(Long userId, String username, String description) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException(
                         "user with id " + userId + " does not exist"
                 ));
-        if (name != null &&
-            name.length() > 0 &&
-                !user.getName().equals(name)
+        if (username != null &&
+            username.length() > 0 &&
+                !user.getName().equals(username)
         ) {
-            user.setName(name);
+            user.setUsername(username);
         }
-        if (email != null &&
-                email.length() > 0 &&
-                !user.getEmail().equals(email)
+        if (description != null &&
+                description.length() > 0 &&
+                !user.getEmail().equals(description)
         ) {
-            user.setEmail(email);
+            user.setEmail(description);
         }
+
+        return convertToUserDto(user);
     }
 
     @Override

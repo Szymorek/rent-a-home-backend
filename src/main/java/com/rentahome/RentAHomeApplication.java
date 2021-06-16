@@ -1,14 +1,23 @@
 package com.rentahome;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.rentahome.firebase.FCMInitializer;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.event.EventListener;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 
 @SpringBootApplication
@@ -16,6 +25,21 @@ public class RentAHomeApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RentAHomeApplication.class, args);
+    }
+
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void initializeFirebase() throws IOException {
+        FileInputStream serviceAccount =
+                new FileInputStream("rentahome-62e7c-firebase-adminsdk-938cp-d6d0c59267.json");
+
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .build();
+
+        FirebaseApp.initializeApp(options);
+
+        System.out.println("Initialized firebase app");
     }
 
 //    @Bean
@@ -32,18 +56,18 @@ public class RentAHomeApplication {
 //                context.addConstraint(securityConstraint);
 //            }
 //        };
-//
-//        // Add HTTP to HTTPS redirect
-//        //tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
-//
+
+        // Add HTTP to HTTPS redirect
+//        tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
+
 //        return tomcat;
 //    }
-//
-//    /*
-//    We need to redirect from HTTP to HTTPS. Without SSL, this application used
-//    port 8082. With SSL it will use port 8443. So, any request for 8082 needs to be
-//    redirected to HTTPS on 8443.
-//     */
+
+    /*
+    We need to redirect from HTTP to HTTPS. Without SSL, this application used
+    port 8082. With SSL it will use port 8443. So, any request for 8082 needs to be
+    redirected to HTTPS on 8443.
+     */
 //    private Connector httpToHttpsRedirectConnector() {
 //        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
 //        connector.setScheme("http");
