@@ -23,4 +23,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Optional<Reservation> findReservationByUser(User user);
 
     List<Reservation> findAllByUser(User user);
+
 }

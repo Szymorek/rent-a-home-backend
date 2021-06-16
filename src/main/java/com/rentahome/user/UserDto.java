@@ -17,8 +17,8 @@ public class UserDto {
     private String surname;
     private String email;
     private String description;
-    private LocalDate dateOfBirth;
-    private LocalDate dateOfJoin;
+    private String fcmToken;
+
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -27,7 +27,6 @@ public class UserDto {
         this.surname = user.getSurname();
         this.email = user.getEmail();
         this.description = user.getDescription();
-        this.dateOfBirth = user.getDateOfBirth();
-        this.dateOfJoin = user.getDateOfCreate();
+        this.fcmToken = user.getFCMToken();
     }
 }

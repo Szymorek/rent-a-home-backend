@@ -14,9 +14,16 @@ public class FCMController {
     private final FCMService fcmService;
 
     @PostMapping
-    public void registerNewOffer(@RequestParam("token") String token,
+    public void sendNotificationToEmail(@RequestParam("email") String email,
                                  @RequestParam("title") String title,
                                  @RequestParam("body") String body) throws FirebaseMessagingException {
-        fcmService.sendToToken(token, title, body);
+        fcmService.sendToUser(email, title, body);
     }
+
+    @PostMapping(path="all")
+    public void sendNotificationToAll(@RequestParam("title") String title,
+                                      @RequestParam("body") String body) throws FirebaseMessagingException {
+        fcmService.sendToAll(title, body);
+    }
+
 }

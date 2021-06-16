@@ -1,8 +1,14 @@
 package com.rentahome.user;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.TopicManagementResponse;
 import com.rentahome.registration.RegistrationResponse;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -117,5 +123,25 @@ public class UserService implements UserDetailsService {
 
     public UserDto convertToUserDto(User user) {
         return new UserDto(user);
+    }
+
+    @SneakyThrows
+    @Transactional
+    public void saveFCMToken(User user, String fcmToken) {
+        subscribeToTopic(fcmToken, "Main");
+        userRepository.updateFCMTokenByUserId(user.getId(), fcmToken);
+    }
+
+
+    private void subscribeToTopic(String token, String topic) throws FirebaseMessagingException {
+        TopicManagementResponse response = FirebaseMessaging.getInstance().subscribeToTopic(
+                List.of(token), topic);
+        System.out.println(response.getSuccessCount() + " tokens were subscribed successfully");
+    }
+
+    public ResponseEntity<UserDto> changePassword(User user, String newPassword) {
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            userRepository.save(user);
+            return new ResponseEntity<>(getUserByEmailDto(user.getEmail()), HttpStatus.FOUND);
     }
 }

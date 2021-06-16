@@ -1,10 +1,10 @@
 package com.rentahome.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,9 +22,17 @@ public class UserController {
         return userService.getUsersDto();
     }
 
-    @GetMapping(path = "login")
-    public UserDto getLoginUser(@AuthenticationPrincipal User user) {
+    @PutMapping(path = "login")
+    public UserDto getLoginUser(@AuthenticationPrincipal User user,
+                                @RequestParam(required = false) String fcmToken ) {
+        userService.saveFCMToken(user, fcmToken);
         return userService.getUserByEmailDto(user.getEmail());
+    }
+
+    @PutMapping(path = "password")
+    public ResponseEntity<UserDto> changePassword(@AuthenticationPrincipal User user,
+                                                  @RequestParam() String newPassword) {
+        return userService.changePassword(user, newPassword);
     }
 
     @PostMapping

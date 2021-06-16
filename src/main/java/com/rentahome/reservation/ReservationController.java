@@ -5,6 +5,7 @@ import com.rentahome.user.User;
 import com.rentahome.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +30,4 @@ public class ReservationController {
     public ReservationDto registerNewReservation(@RequestBody ReservationDto reservationDto, @AuthenticationPrincipal User user) {
         return reservationService.addNewReservation(reservationDto, user);
     }
-
-    @PutMapping
-    public void acceptReservation(@RequestBody Reservation reservation, @AuthenticationPrincipal User user) {
-        reservationService.acceptReservation(reservation, user);
-    }
-
 }

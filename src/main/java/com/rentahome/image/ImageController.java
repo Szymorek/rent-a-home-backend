@@ -18,14 +18,19 @@ public class ImageController {
     private final ImageRepository imageRepository;
 
     @PostMapping
-    public Long uploadImageFile(@RequestParam() MultipartFile multipartImage) throws IOException {
-        Image image = new Image(
-                multipartImage.getName(),
-                multipartImage.getName(),
-                multipartImage.getSize(),
-                multipartImage.getBytes()
-        );
-        return imageRepository.save(image).getId();
+    public String uploadImageFile(@RequestParam("image") MultipartFile image) throws IOException {
+        if(!image.isEmpty()) {
+            Image fileImage = new Image(
+                    image.getName(),
+                    image.getName(),
+                    image.getSize(),
+                    image.getBytes()
+            );
+            imageRepository.save(fileImage).getId();
+            return "all good";
+        } else {
+            return "wrong json";
+        }
     }
 
     @GetMapping(path = "{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)

@@ -30,8 +30,6 @@ public class RegistrationService {
                        request.getSurname(),
                        request.getEmail(),
                        request.getPassword(),
-                        LocalDate.of(2000, Month.APRIL, 1),
-                        LocalDate.now(),
                         UserRole.ROLE_USER,
                         false,
                         true

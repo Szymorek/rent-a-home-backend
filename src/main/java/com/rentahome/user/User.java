@@ -38,8 +38,6 @@ public class User implements UserDetails {
     private String email;
     @NotNull
     private String password;
-    private LocalDate dateOfBirth;
-    private LocalDate dateOfCreate = LocalDate.now();
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.ROLE_USER;
     private Boolean locked = false;
@@ -47,22 +45,19 @@ public class User implements UserDetails {
     @OneToOne
     private Image image;
     private String description;
+    private String FCMToken;
 
-    public User(String name, String email, LocalDate dateOfBirth, LocalDate dateOfCreate) {
+    public User(String name, String email) {
         this.name = name;
         this.email = email;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfCreate = dateOfCreate;
     }
 
-    public User(String name, String surname, String username, String email, String password, LocalDate dateOfBirth, LocalDate dateOfCreate, UserRole userRole, Boolean locked, Boolean enabled) {
+    public User(String name, String surname, String username, String email, String password, UserRole userRole, Boolean locked, Boolean enabled) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfCreate = dateOfCreate;
         this.userRole = userRole;
         this.locked = locked;
         this.enabled = enabled;
